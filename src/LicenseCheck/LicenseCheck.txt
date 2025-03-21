@@ -1,0 +1,102 @@
+i t m 8 n o t e 1
+Implementing license check
+Integrating your itm8 Business Central app with a license check makes it possible to track usage 
+of apps.
+With the itm8 Core app a license check which is corresponding with itm8’s license check database 
+is provided.
+Inside your app you must implement a few statements corresponding with the itm8 Core app.
+Dependency
+First you must define the dependency of itm8 Core in your apps app.json file.
+"dependencies": [
+{
+"id": "2a102edd-fbcc-438d-a9c1-8cc3cf64dfcd",
+"name": "itm8 Core",
+"publisher": "ProFacto A/S",
+"version": "1.0.0.8"
+}
+Role centers
+An environment check will be performed by an event trigger from inside itm8 Core.
+All detected itm8 ISV products will be processed and the license status according to the license 
+check database will be returned with a proper notification.
+[EventSubscriber(ObjectType::Codeunit, Codeunit::"Role Center Notification Mgt.", 
+ 'OnBeforeShowNotifications', '', false, false)]
+local procedure OnRoleCenterOpen()
+var
+LicenseInfoProf: Record "License Information_Prof";
+LicenseFuncProf: Codeunit LicenseFunctions_Prof;
+begin
+LicenseInfoProf.LoadFields("Licensed App ID");
+if LicenseInfoProf.FindSet() then
+repeat
+LicenseFuncProf.EnvironmentCheck(LicenseInfoProf."Licensed App ID");
+until LicenseInfoProf.Next() = 0;
+end;
+You do not need to add any program code to activate this.
+i t m 8 n o t e 2
+Check if license is approved
+A fast check to verify that if the license is approved or not can be established by adding two simple functions to your app in a general management Codeunit.
+The GetAppId is used to get the parameter for the IsLicenseApproved procedure.
+internal procedure IsAppLicenseApproved(): Boolean
+var
+LicenseFunctions: Codeunit LicenseFunctions_Prof;
+AppID: Text[36];
+begin
+AppID := GetAppId();
+exit(LicenseFunctions.IsLicenseApproved(AppID));
+end;
+procedure GetAppId(): Text[36]
+var
+AppID: Text[36];
+AppGuidTxt: Text[38];
+AppInfo: ModuleInfo;
+ModuleInfoNotFoundLbl: Label 'Module info not found.';
+begin
+if not NavApp.GetCurrentModuleInfo(AppInfo) then
+Error(ModuleInfoNotFoundLbl);
+Evaluate(AppGuidTxt, LowerCase(AppInfo.Id));
+AppID := CopyStr(CopyStr(AppGuidTxt, 2, StrLen(AppGuidTxt) - 1), 1, MaxStrLen(AppID));
+exit(AppID);
+end;
+Call the IsAppLicenseApproved procedure on strategic places to abort further use of functionality, 
+if the license is not approved.
+Example from Advanced Data Management:
+if not FieldSecurityMgmt.IsAppLicenseApproved() then
+exit;
+FieldSecurityMgmt is the Codeunit where procedure IsAppLicenseApproved has been implemented.
+i t m 8 n o t e 3
+Environment Check
+On certain places the environment check can be called to force communication with the license 
+check database.
+An example is from the OnOpenPage trigger on setup pages.
+trigger OnOpenPage()
+var
+FieldSecurityMgmt: Codeunit "Field Security Mgt. PROF";
+LicenseFunctions: Codeunit LicenseFunctions_Prof;
+AppID: Text[36];
+begin
+AppID := FieldSecurityMgmt.GetAppId();
+if not LicenseFunctions.IsLicenseApproved(AppID) then
+LicenseFunctions.EnvironmentCheck(AppID);
+end;
+Manual license check
+It is recommended to add an action button from where the license check can be performed manually on request.
+On the setup page, please implement the action button.
+action(ActCheckLicense)
+{
+ApplicationArea = All;
+Caption = 'Check License';
+ToolTip = 'Start the license check manually.';
+Promoted = true;
+PromotedCategory = Process;
+PromotedIsBig = true;
+Image = ApprovalSetup;
+trigger OnAction()
+var
+FieldSecurityMgmt: Codeunit "Field Security Mgt. PROF";
+LicenseFunctions: Codeunit "LicenseFunctions_Prof";
+AppID: Text[36];
+begin
+AppID := FieldSecurityMgmt.GetAppId();
+LicenseFunctions.ImmediateLicenseCheckRequest(AppID);
+end;
+}

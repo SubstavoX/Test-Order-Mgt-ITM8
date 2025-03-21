@@ -1,0 +1,47 @@
+{
+  "id": "63cbd6f8-3f75-40fc-b80e-6cfc366a20b8",
+  "name": "Extended Scanner Registration",
+  "publisher": "Itm8",
+  "version": "0.0.0.1",
+  "brief": "Extended Scanner Registration (Tasklet Mobile WMS)",
+  "description": "Extended Scanner Registration",
+  "privacyStatement": "https://ITM8.com/privacy-policy",
+  "EULA": "https://ITM8.com/Extended-Scanner-Registration/",
+  "help": "https://www.ITM8.com/support",
+  "url": "https://ITM8.com",
+  "logo": "./logo/itm8-216pix.png",
+  "dependencies": [
+    {
+      "id": "a5727ce6-368c-49e2-84cb-1a6052f0551c",
+      "name": "Tasklet Mobile WMS",
+      "publisher": "Tasklet Factory",
+      "version": "5.53.250.255"
+    },
+    {
+      "id": "83326d6d-11f8-49fd-981a-6f266a7c8d81",
+      "name": "Customizable Report Pack",
+      "publisher": "ForNAV",
+      "version": "8.0.0.0"
+    }
+  ],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "20.3.0.0",
+  "idRanges": [
+    {
+      "from": 63000,
+      "to": 63099
+    }
+  ],
+  "contextSensitiveHelpUrl": "https://ITM8.com/Extended-Scanner-Registration",
+  "applicationInsightsConnectionString": "InstrumentationKey=b08dffab-d677-4793-9e9d-76b6f2076bfa;IngestionEndpoint=https://northeurope-2.in.applicationinsights.azure.com/;LiveEndpoint=https://northeurope.livediagnostics.monitor.azure.com/",
+  "resourceExposurePolicy": {
+    "allowDebugging": false,
+    "allowDownloadingSource": false,
+    "includeSourceInSymbolFile": false
+  },
+  "runtime": "9.1",
+  "features": ["TranslationFile","GenerateCaptions","NoImplicitWith"],
+  "preprocessorSymbols": [],
+  "target": "Cloud"
+}

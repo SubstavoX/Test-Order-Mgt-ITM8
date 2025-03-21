@@ -1,0 +1,41 @@
+{
+    "id": "2b48dacc-1a0a-4f4a-b574-b6673d5d869f",
+    "name": "Test Order Management",
+    "publisher": "ProFacto A/S",
+    "version": "25.0.0.0",
+    "brief": "Test Order Management Extension",
+    "description": "Manages test orders for items and lots in Microsoft Dynamics 365 Business Central. Provides advanced lot tracking, order management, and item handling features to optimize business processes.",
+    "privacyStatement": "https://itm8.com/policies/privacy-policy",
+    "EULA": "https://itm8.dk/forretningssystemer/erp/addons/test-order-management",
+    "help": "https://itm8.dk/kontakt",
+    "url": "https://itm8.dk",
+    "logo": "./logo/itm8-216pix.png",
+    "dependencies": [
+      {
+        "id": "2a102edd-fbcc-438d-a9c1-8cc3cf64dfcd",
+        "name": "itm8 Core",
+        "publisher": "ProFacto A/S",
+        "version": "1.0.0.11"
+      }
+    ],
+    "screenshots": [],
+    "platform": "25.0.0.0",
+    "application": "25.0.0.0",
+    "idRanges": [
+      {
+        "from": 6208500,
+        "to": 6208519
+      }
+    ],
+    "resourceExposurePolicy": {
+      "allowDebugging": true,
+      "allowDownloadingSource": false,
+      "includeSourceInSymbolFile": false
+    },
+    "features": ["GenerateCaptions", "TranslationFile", "NoImplicitWith"],
+    "contextSensitiveHelpUrl": "https://itm8.dk/forretningssystemer/erp/addons/test-order-management",
+    "applicationInsightsConnectionString": "InstrumentationKey=b08dffab-d677-4793-9e9d-76b6f2076bfa;IngestionEndpoint=https://northeurope-2.in.applicationinsights.azure.com/;LiveEndpoint=https://northeurope.livediagnostics.monitor.azure.com/",
+    "runtime": "10.0",
+    "target": "Cloud"
+  }
+  
